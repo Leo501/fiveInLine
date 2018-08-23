@@ -26,7 +26,6 @@ cc.Class({
             console.log('已选择');
             return;
         }
-        this.setCheckSpriteFrame(ChessType.black);
         this.checkFn && this.checkFn(target.name, this);
     },
 
@@ -42,6 +41,27 @@ cc.Class({
         } else {
             console.error('setCheckSpriteFrame err');
         }
+    },
+
+    /**
+     * 是否已下子
+     */
+    isHaveChess() {
+        return this.spriteChess.spriteFrame == null;
+    },
+
+    /**
+     * 是否为白子
+     */
+    isWhiteChess() {
+        return this.spriteChess.spriteFrame == this.whiteSpriteFrame;
+    },
+
+    /**
+     * 是否为黑子
+     */
+    isBlackChess() {
+        return this.spriteChess.spriteFrame == this.blackSpriteFrame;
     }
 
     // start () {

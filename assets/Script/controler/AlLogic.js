@@ -6,6 +6,7 @@ class AlLogic {
         //棋盘中每一个五格相连的线，称之为五元组
         this.fiveGroup = [];
         this.fiveGroupScore = [] //五元组分数
+        this.alChessColor = my.confMap.ChessColor.white;
     }
 
     /**
@@ -46,6 +47,26 @@ class AlLogic {
         }
     }
 
+
+    setChessColor(color) {
+        this.alChessColor = color;
+    }
+
+    getChessColor() {
+        return this.alChessColor;
+    }
+    /**
+     * 设置棋子对象数组
+     * @param {*} arr 
+     */
+    setChessArr(arr) {
+        this.chessArr = arr;
+    }
+
+    getChessArr() {
+        return this.chessArr;
+    }
+
     /**
      * 该位置是否为黑子
      * @param {*} i 
@@ -53,6 +74,10 @@ class AlLogic {
      */
     isBlackChess(i, j) {
         let pos = this.fiveGroup[i][j];
+        let scriptChess = this.getChessArr()[pos];
+        console.log('scriptChess=', scriptChess);
+        if (scriptChess)
+            return scriptChess.isBlackChess();
         return false;
     }
 
@@ -63,6 +88,10 @@ class AlLogic {
      */
     isWhiteCheck(i, j) {
         let pos = this.fiveGroup[i][j];
+        let scriptChess = this.getChessArr()[pos];
+        console.log('scriptChess=', scriptChess);
+        if (scriptChess)
+            return scriptChess.isWhiteChess();
         return false;
     }
 
@@ -75,10 +104,15 @@ class AlLogic {
      */
     isHaveChessByPos(i, j) {
         let pos = this.fiveGroup[i][j];
+        let scriptChess = this.getChessArr()[pos];
+        if (scriptChess) {
+            return scriptChess.isHaveChess();
+        }
+        return false;
     }
 
     //电脑下棋逻辑
-    chessAI(chessList) {
+    chessAI() {
         //评分
         for (var i = 0; i < this.fiveGroup.length; i++) {
             var b = 0; //五元组里黑棋的个数
@@ -152,3 +186,5 @@ class AlLogic {
         return this.fiveGroup[mPosition][nPosition];
     }
 }
+
+module.exports = new AlLogic();
