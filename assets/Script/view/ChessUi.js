@@ -62,6 +62,15 @@ cc.Class({
      */
     isBlackChess() {
         return this.spriteChess.spriteFrame == this.blackSpriteFrame;
+    },
+
+    /**
+     * 返回当前颜色
+     */
+    getChessColor() {
+        if (this.isBlackChess()) return my.confMap.ChessType.black;
+        if (this.isWhiteChess()) return my.confMap.ChessType.white;
+        return -1;
     }
 
     // start () {

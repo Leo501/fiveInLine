@@ -185,6 +185,42 @@ class AlLogic {
         //返回最优位置下子位置
         return this.fiveGroup[mPosition][nPosition];
     }
+
+    chessColorByPos(pos) {
+        return this.getChessArr()[pos].getChessColor();
+    }
+
+    /**
+     * 当前下子是否可以五子成线
+     * @param {*} chess 
+     */
+    chessJudge(name, chess, resultFn) {
+        let chessColor = chess.getChessColor();
+        var x0 = name % 15;
+        var y0 = parseInt(name / 15);
+        //判断横向
+        var fiveCount = 0;
+        for (var x = 0; x < 15; x++) {
+            // if ((this.chessList[y0 * 15 + x].getComponent(cc.Sprite)).spriteFrame === this.touchChess.getComponent(cc.Sprite).spriteFrame) {
+            if (this.chessColorByPos(y0 * 15 + x) == chessColor) {
+                fiveCount++;
+                if (fiveCount == 5) {
+                    resultFn(1);
+                    // if (this.gameState === 'black') {
+                    //     this.overLabel.string = "你赢了";
+                    //     this.overSprite.node.x = 0;
+                    // } else {
+                    //     this.overLabel.string = "你输了";
+                    //     this.overSprite.node.x = 0;
+                    // }
+                    // this.gameState = 'over';
+                    return;
+                }
+            } else {
+                fiveCount = 0;
+            }
+        }
+    }
 }
 
 module.exports = new AlLogic();
