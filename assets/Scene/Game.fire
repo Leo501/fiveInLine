@@ -41,8 +41,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
+      "x": 0.2513444315402293,
+      "y": 0.2513444315402293,
       "z": 1
     },
     "_quat": {
@@ -83,6 +83,9 @@
     "_components": [
       {
         "__id__": 18
+      },
+      {
+        "__id__": 19
       }
     ],
     "_prefab": null,
@@ -637,7 +640,7 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_localZOrder": 10,
+    "_localZOrder": 9,
     "groupIndex": 0,
     "_id": "89okpjXNdMvq22/BnEVjVd"
   },
@@ -661,7 +664,7 @@
     },
     "_rotationX": 0,
     "_rotationY": 0,
-    "_localZOrder": 11
+    "_localZOrder": 10
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -738,5 +741,19 @@
     "_fitWidth": false,
     "_fitHeight": true,
     "_id": "501IObjBJDqZ1vgPciTgak"
+  },
+  {
+    "__type__": "d9ffazihu1JRYIaVW+3I2up",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 2
+    },
+    "_enabled": true,
+    "scriptChessBoard": {
+      "__id__": 17
+    },
+    "chessAl": null,
+    "_id": "f8PCD5vRlHuLp+JV8NgGDq"
   }
 ]
