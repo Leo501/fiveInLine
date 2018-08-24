@@ -80,9 +80,6 @@ class AlLogic {
      */
     isBlackChess(i, j) {
         let pos = this.fiveGroup[i][j];
-        if (pos == 112) {
-            console.log('112');
-        }
         let scriptChess = this.getChessArr()[pos];
         // console.log('scriptChess=', scriptChess);
         if (scriptChess)
@@ -208,7 +205,12 @@ class AlLogic {
      * @param {*} pos 
      */
     chessColorByPos(pos) {
-        let color = this.getChessArr()[pos].getChessColor();
+        let color = -1;
+        try {
+            color = this.getChessArr()[pos].getChessColor();
+        } catch (error) {
+
+        }
         // console.log('pos=', pos, 'color=', color);
         return color;
     }

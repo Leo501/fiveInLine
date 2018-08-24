@@ -15,8 +15,8 @@ cc.Class({
 
     },
 
-    init(checkFn) {
-        this.checkFn = checkFn;
+    init(chessType) {
+        this.setCheckSpriteFrame(chessType);
     },
 
     /**
@@ -37,6 +37,10 @@ cc.Class({
      */
     setCheckSpriteFrame(chessType) {
         // console.log('setCheckSpriteFrame');
+        if (this.spriteChess.spriteFrame) {
+            console.log('已选择');
+            return;
+        }
         if (chessType == ChessType.white) {
             this.spriteChess.spriteFrame = this.whiteSpriteFrame;
         } else if (chessType == ChessType.black) {

@@ -35,6 +35,27 @@ class GameModel {
     }
 
     /**
+     * 设置游戏状态
+     * @param {*} state 
+     */
+    setGameState(state) {
+        this.info.gameState = state;
+    }
+
+    /**
+     * 获取游戏状态
+     */
+    getGameState() {
+        return this.info.gameState || my.confMap.GameState.ide;
+    }
+
+    isPlayState() {
+        return this.info.gameState == my.confMap.GameState.play;
+    }
+
+
+
+    /**
      * 切换到下一种颜色
      */
     nextChessColor() {
