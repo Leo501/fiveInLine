@@ -11,11 +11,11 @@ class GameModel {
      * 设置本人下棋颜色
      * @param {*} color 
      */
-    setParsonColor(color) {
+    setMyColor(color) {
         this.info.parsonColor = color;
     }
 
-    getParsonColor() {
+    getMyColor() {
         return this.info.parsonColor;
     }
 

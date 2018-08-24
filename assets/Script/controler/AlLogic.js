@@ -9,6 +9,11 @@ class AlLogic {
         this.alChessColor = my.confMap.ChessColor.white;
     }
 
+    init(arr) {
+        this.setChessArr(arr);
+        this.initFiveGroup();
+    }
+
     /**
      * 初始化五元组
      */
@@ -48,11 +53,11 @@ class AlLogic {
     }
 
 
-    setChessColor(color) {
+    setAlColor(color) {
         this.alChessColor = color;
     }
 
-    getChessColor() {
+    getAlColor() {
         return this.alChessColor;
     }
     /**
@@ -60,6 +65,7 @@ class AlLogic {
      * @param {*} arr 
      */
     setChessArr(arr) {
+        console.log('setChessArr=');
         this.chessArr = arr;
     }
 
@@ -74,8 +80,11 @@ class AlLogic {
      */
     isBlackChess(i, j) {
         let pos = this.fiveGroup[i][j];
+        if (pos == 112) {
+            console.log('112');
+        }
         let scriptChess = this.getChessArr()[pos];
-        console.log('scriptChess=', scriptChess);
+        // console.log('scriptChess=', scriptChess);
         if (scriptChess)
             return scriptChess.isBlackChess();
         return false;
@@ -89,7 +98,7 @@ class AlLogic {
     isWhiteCheck(i, j) {
         let pos = this.fiveGroup[i][j];
         let scriptChess = this.getChessArr()[pos];
-        console.log('scriptChess=', scriptChess);
+        // console.log('scriptChess=', scriptChess);
         if (scriptChess)
             return scriptChess.isWhiteChess();
         return false;
@@ -106,19 +115,27 @@ class AlLogic {
         let pos = this.fiveGroup[i][j];
         let scriptChess = this.getChessArr()[pos];
         if (scriptChess) {
-            return scriptChess.isHaveChess();
+            return !scriptChess.isNullChess();
         }
         return false;
     }
 
+    isSameColor(chess1, chess2) {
+        console.log('chess1=', chess1, chess2);
+        return chess1 == chess2;
+    }
+
     //电脑下棋逻辑
-    chessAI() {
+    ai() {
+        let Alcolor = this.getAlColor();
+        let otherColor = my.gameModel.getMyColor();
+        console.log('robotColor', Alcolor);
         //评分
         for (var i = 0; i < this.fiveGroup.length; i++) {
             var b = 0; //五元组里黑棋的个数
             var w = 0; //五元组里白棋的个数
             for (var j = 0; j < 5; j++) {
-                this.getComponent(cc.Sprite).spriteFrame
+                // this.getComponent(cc.Sprite).spriteFrame
                 if (this.isBlackChess(i, j)) {
                     b++;
                 } else if (this.isWhiteCheck(i, j)) {
@@ -186,8 +203,14 @@ class AlLogic {
         return this.fiveGroup[mPosition][nPosition];
     }
 
+    /**
+     * 获取某个位置的棋子的颜色
+     * @param {*} pos 
+     */
     chessColorByPos(pos) {
-        return this.getChessArr()[pos].getChessColor();
+        let color = this.getChessArr()[pos].getChessColor();
+        // console.log('pos=', pos, 'color=', color);
+        return color;
     }
 
     /**
@@ -195,31 +218,74 @@ class AlLogic {
      * @param {*} chess 
      */
     chessJudge(name, chess, resultFn) {
+        resultFn = resultFn || function (data) {
+            console.log('resultFn，data', data);
+        };
         let chessColor = chess.getChessColor();
         var x0 = name % 15;
         var y0 = parseInt(name / 15);
         //判断横向
         var fiveCount = 0;
         for (var x = 0; x < 15; x++) {
-            // if ((this.chessList[y0 * 15 + x].getComponent(cc.Sprite)).spriteFrame === this.touchChess.getComponent(cc.Sprite).spriteFrame) {
             if (this.chessColorByPos(y0 * 15 + x) == chessColor) {
                 fiveCount++;
                 if (fiveCount == 5) {
                     resultFn(1);
-                    // if (this.gameState === 'black') {
-                    //     this.overLabel.string = "你赢了";
-                    //     this.overSprite.node.x = 0;
-                    // } else {
-                    //     this.overLabel.string = "你输了";
-                    //     this.overSprite.node.x = 0;
-                    // }
-                    // this.gameState = 'over';
                     return;
                 }
             } else {
                 fiveCount = 0;
             }
         }
+        //判断纵向
+        fiveCount = 0;
+        for (var y = 0; y < 15; y++) {
+            if (this.chessColorByPos(y * 15 + x0) == chessColor) {
+                fiveCount++;
+                if (fiveCount == 5) {
+                    resultFn(1);
+                    return;
+                }
+            } else {
+                fiveCount = 0;
+            }
+        }
+        //判断右上斜向
+        var f = y0 - x0;
+        fiveCount = 0;
+        for (var x = 0; x < 15; x++) {
+            if (f + x < 0 || f + x > 14) {
+                continue;
+            }
+            if (this.chessColorByPos((f + x) * 15 + x) == chessColor) {
+                fiveCount++;
+                if (fiveCount == 5) {
+                    resultFn(1);
+                    return;
+                }
+            } else {
+                fiveCount = 0;
+            }
+        }
+
+        //判断右下斜向
+        f = y0 + x0;
+        fiveCount = 0;
+        for (var x = 0; x < 15; x++) {
+            if (f - x < 0 || f - x > 14) {
+                continue;
+            }
+            if (this.chessColorByPos((f - x) * 15 + x) == chessColor) {
+                fiveCount++;
+                if (fiveCount == 5) {
+                    resultFn(1);
+                    return;
+                }
+            } else {
+                fiveCount = 0;
+            }
+        }
+        resultFn(-1);
     }
 }
 

@@ -1,19 +1,23 @@
-const chessAl = require('AlLogic');
 cc.Class({
     extends: cc.Component,
 
     properties: {
         scriptChessBoard: cc.require('ChessBoardUi'),
-        chessAl: null,
     },
 
 
     onLoad() {
-        my.gameModel.setParsonColor(my.confMap.ChessColor.black);
-        my.gameModel.setChessColor(my.confMap.ChessColor.white);
+        //本人为黑子
+        my.gameModel.setMyColor(my.confMap.ChessColor.black);
+        //ai为白子
+        my.chessAl.setAlColor(my.confMap.ChessColor.white);
+        //初始化
         this.scriptChessBoard.init();
-        //获取棋子数据
-        chessAl.setChessArr(this.scriptChessBoard.getChessScriptArr());
+        //初始化获取棋子数据,并初始化五元组
+        my.chessAl.init(this.scriptChessBoard.getChessScriptArr());
+        //白子先下
+        my.gameModel.setChessColor(my.confMap.ChessColor.white);
+        this.scriptChessBoard.getChessScriptArr()[112].onEventClicked_checkGame();
     },
 
     // start () {

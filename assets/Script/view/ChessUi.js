@@ -19,8 +19,11 @@ cc.Class({
         this.checkFn = checkFn;
     },
 
-    onEventClicked_checkGame(event) {
-        let target = event.target;
+    /**
+     * 在本位置下棋
+     */
+    onEventClicked_checkGame() {
+        let target = this.node;
         // console.log('target=', target);
         if (this.spriteChess.spriteFrame) {
             console.log('已选择');
@@ -44,9 +47,9 @@ cc.Class({
     },
 
     /**
-     * 是否已下子
+     * 是否空
      */
-    isHaveChess() {
+    isNullChess() {
         return this.spriteChess.spriteFrame == null;
     },
 
@@ -68,8 +71,8 @@ cc.Class({
      * 返回当前颜色
      */
     getChessColor() {
-        if (this.isBlackChess()) return my.confMap.ChessType.black;
-        if (this.isWhiteChess()) return my.confMap.ChessType.white;
+        if (this.isBlackChess()) return my.confMap.ChessColor.black;
+        if (this.isWhiteChess()) return my.confMap.ChessColor.white;
         return -1;
     }
 
